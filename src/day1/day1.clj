@@ -1,5 +1,8 @@
-(require '[clojure.string :as str])
+(ns day1
+  (:require
+   [utils :refer [evaluate_results]])) 
 
+(require '[clojure.string :as str])
 (defn read-pairs
   [path]
   (->>
@@ -9,8 +12,8 @@
 
 
 (defn part1 
-  []
-  (let [pairs (read-pairs "src/day1/input.txt")]
+  [path]
+  (let [pairs (read-pairs path)]
     (->>
      (map -
           (sort (map first pairs))
@@ -21,13 +24,12 @@
     ))
 
 (defn part2
-  []
-  (let [pairs (read-pairs "src/day1/input.txt"),
+  [path]
+  (let [pairs (read-pairs path),
         right_counts (frequencies (map last pairs)),
         left (map first pairs)]
     (->>
      (map #(* % (get right_counts % 0)) left)
      (apply +))))
 
-(println (str "Part 1 result: " (part1)))
-(println (str "Part 2 result: " (part2)))
+(evaluate_results part1 11 part2 31 1)
