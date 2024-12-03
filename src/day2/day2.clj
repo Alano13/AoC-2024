@@ -1,6 +1,6 @@
 (ns day2
   (:require
-   [utils :refer [evaluate_results]])) 
+   [utils :refer [evaluate-results]])) 
 
 (require '[clojure.string :as str])
 
@@ -40,4 +40,4 @@
   (count (filter is-almost-safe (read-reports path))))
 
 
-(evaluate_results part1 2 part2 4 2)
+(evaluate-results part1 2 part2 4 2)

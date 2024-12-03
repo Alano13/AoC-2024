@@ -1,6 +1,6 @@
 (ns day1
   (:require
-   [utils :refer [evaluate_results]])) 
+   [utils :refer [evaluate-results]])) 
 
 (require '[clojure.string :as str])
 (defn read-pairs
@@ -32,4 +32,4 @@
      (map #(* % (get right_counts % 0)) left)
      (apply +))))
 
-(evaluate_results part1 11 part2 31 1)
+(evaluate-results part1 11 part2 31 1)
