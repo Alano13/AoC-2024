@@ -1,0 +1,42 @@
+(ns day2
+  (:require
+   [utils :refer [evaluate_results]])) 
+
+(require '[clojure.string :as str])
+
+(defn read-reports
+  [path]
+  (->>
+   (str/split-lines (slurp path))
+   (map #(str/split % #" "))
+   (map #(map Integer/parseInt %))))
+
+(defn is-safe
+  [report]
+  (let [diffs (map #(apply - %) (partition 2 1 report))]
+    (or
+     (every? #(and (>= % 1) (<= % 3)) diffs) 
+     (every? #(and (>= % -3) (<= % -1)) diffs))))
+
+(defn skip-ith [collection i]
+  (->>
+   (map-indexed vector collection)
+   (remove #(= (first %) i))
+   (map last)))
+
+(defn is-almost-safe [report]
+  (->>
+   (range (count report))
+   (map #(skip-ith report %))
+   (some is-safe)))
+
+
+(defn part1
+  [path]
+  (count (filter is-safe (read-reports path))))
+
+(defn part2
+  [path]
+  (count (filter is-almost-safe (read-reports path))))
+
+(evaluate_results part1 2 part2 4 2)
