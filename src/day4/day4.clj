@@ -36,9 +36,10 @@
   [path]
   (let [matrix (read-matrix path)
         indices (range (count matrix))]
-    (->> (for [x indices y indices] [x y])
-         (mapcat (fn [[x, y]] (map #(is-valid-char matrix % 0 x y) directions)))
-         (apply +))))
+    (->>
+     (for [x indices y indices] (map #(is-valid-char matrix % 0 x y) directions))
+     flatten
+     (apply +))))
   
 
 (def bool-to-int {true 1, false 0})
@@ -61,9 +62,9 @@
   [path]
   (let [matrix (read-matrix path)
         indices (range 1 (dec (count matrix)))]
-    (->> (for [x indices y indices] [x y])
-         (map (fn [[x, y]] (is-valid-word matrix x y)))
-         (apply +))))
+    (->> 
+     (for [x indices y indices] (is-valid-word matrix x y)) 
+     (apply +))))
 
 (evaluate-results
  part1 18
