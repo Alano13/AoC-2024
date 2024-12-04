@@ -14,7 +14,7 @@
 
 
 (def word [\X, \M, \A, \S])
-(def last-word-idx 3)
+(def last-char-idx 3)
 (def directions (for [x (range -1 2) y (range -1 2)] [x y]))
 
 (defn is-valid-coord [x, y, size] (and (<= 0 x) (<= 0 y) (< x size) (< y size)))
@@ -23,7 +23,7 @@
   (if (and
        (is-valid-coord x y (count matrix))
        (= (word char-idx) ((matrix y) x)))
-    (if (= char-idx last-word-idx)
+    (if (= char-idx last-char-idx)
       1
       (apply is-valid-char
              matrix
