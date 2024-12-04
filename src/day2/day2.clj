@@ -1,13 +1,15 @@
 (ns day2
   (:require
+   [clojure.string :as str]
    [utils :refer [evaluate-results]])) 
 
-(require '[clojure.string :as str])
+(def day-number 2)
 
 (defn read-reports
   [path]
   (->>
-   (str/split-lines (slurp path))
+   (slurp path)
+   str/split-lines
    (map #(str/split % #" "))
    (map #(map Integer/parseInt %))))
 
@@ -20,7 +22,10 @@
 
 (defn part1
   [path]
-  (count (filter is-safe (read-reports path))))
+  (->>
+   (read-reports path)
+   (filter is-safe)
+   count))
 
 
 (defn skip-ith [collection i]
@@ -37,7 +42,13 @@
 
 (defn part2
   [path]
-  (count (filter is-almost-safe (read-reports path))))
+  (->>
+   (read-reports path)
+   (filter is-almost-safe)
+   count))
 
 
-(evaluate-results part1 2 part2 4 2)
+(evaluate-results
+ part1 2
+ part2 4
+ day-number)

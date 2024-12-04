@@ -1,17 +1,20 @@
 (ns day1
   (:require
+   [clojure.string :as str]
    [utils :refer [evaluate-results]])) 
 
-(require '[clojure.string :as str])
+(def day-number 1)
+
 (defn read-pairs
   [path]
   (->>
-   (str/split-lines (slurp path))
+   (slurp path)
+   str/split-lines
    (map #(str/split % #"   "))
    (map #(map Integer/parseInt %))))
 
 
-(defn part1 
+(defn part1
   [path]
   (let [pairs (read-pairs path)]
     (->>
@@ -19,9 +22,7 @@
           (sort (map first pairs))
           (sort (map last pairs)))
      (map abs)
-     (apply +)
-     )
-    ))
+     (apply +))))
 
 (defn part2
   [path]
@@ -32,4 +33,7 @@
      (map #(* % (get right_counts % 0)) left)
      (apply +))))
 
-(evaluate-results part1 11 part2 31 1)
+(evaluate-results
+ part1 11
+ part2 31
+ day-number)

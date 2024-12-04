@@ -15,7 +15,9 @@
 
 (defn part1
   [path]
-  (execute-commands (slurp path)))
+  (->>
+   (slurp path)
+   execute-commands))
 
 (defn part2
   [path]
