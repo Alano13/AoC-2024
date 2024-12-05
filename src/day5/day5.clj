@@ -18,15 +18,15 @@
                  (map #(str/split % #",")))]
     [rules, updates]))
 
-(defn is-page-valid [later-pages page-to-idx page-idx]
+(defn page-valid? [later-pages page-to-idx page-idx]
   (->> later-pages
        (map page-to-idx)
        (filter identity)
        (every? #(< page-idx %))))
 
-(defn is-update-valid [rules update]
-  (let [page-to-idx (zipmap update (range (count update)))]
-    (every? (fn [page] (is-page-valid (rules page) page-to-idx (page-to-idx page))) update)))
+(defn update-valid? [rules update]
+  (let [page-to-idx (zipmap update (range))]
+    (every? (fn [page] (page-valid? (rules page) page-to-idx (page-to-idx page))) update)))
 
 (defn middle [coll] (nth coll (quot (count coll) 2)))
 
@@ -34,7 +34,7 @@
   [path]
   (let [[rules, updates] (read-data path)]
     (->> updates
-         (filter (fn [update] (is-update-valid rules update)))
+         (filter (fn [update] (update-valid? rules update)))
          (map #(-> % middle Integer/parseInt))
          (apply +))))
 
@@ -44,7 +44,7 @@
   (let [[rules, updates] (read-data path)]
     (->>
      updates
-     (filter #(not (is-update-valid rules %)))
+     (filter #(not (update-valid? rules %)))
      (map #(sort-by identity (fn [a, b] (contains? (rules b) a)) %))
      (map #(-> % middle Integer/parseInt))
      (apply +))))
