@@ -12,7 +12,7 @@
    (str/split-lines)
    (map (fn [line]
           (let [[total, raw-numbers] (str/split line #": ")]
-            [(Long/parseLong total) (mapv Long/parseLong (str/split raw-numbers #" "))])))))
+            [(parse-long total) (mapv parse-long (str/split raw-numbers #" "))])))))
 
 (defn valid-equation? [operators [total, numbers]]
   (->>
@@ -36,7 +36,7 @@
 
 (execute-test-part part1 day-number)
 
-(defn || [a, b] (Long/parseLong (str a b)))
+(defn || [a, b] (parse-long (str a b)))
 
 (defn part2
   [path]
