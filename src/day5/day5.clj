@@ -20,8 +20,7 @@
 
 (defn page-valid? [later-pages page-to-idx page-idx]
   (->> later-pages
-       (map page-to-idx)
-       (filter identity)
+       (keep page-to-idx)
        (every? #(< page-idx %))))
 
 (defn update-valid? [rules update]
